@@ -3,8 +3,9 @@ import { ENV } from "./config/env.js";
 import { connectDb } from "./config/db.js";
 
 const app = express();
-connectDb();
+
 
 app.listen(ENV.PORT,()=>{
+    connectDb();
     console.log("running on ..." , ENV.PORT);
 })
