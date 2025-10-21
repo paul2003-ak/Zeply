@@ -18,7 +18,7 @@ app.use("/api/users",userrouter)
 app.use("/api/post",Postrouter)
 
 //error handling middleware
-app.use((err,req,res)=>{
+app.use((err,req,res,next)=>{
     console.log(err);
     res.status(500).json({message:"Something went wrong", error: err.message});
 })

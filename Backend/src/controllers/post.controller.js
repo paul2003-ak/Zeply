@@ -1,6 +1,7 @@
 import postmodel from '../models/post.model.js';
 import usermodel from '../models/user.model.js';
 import commentmodel from '../models/comment.model.js';
+import notificationmodel from '../models/notification.model.js'
 import { getAuth } from "@clerk/express";
 import cloudinary from '../config/cloudinary.js';
 
