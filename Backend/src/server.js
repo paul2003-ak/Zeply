@@ -33,7 +33,24 @@ app.use((err,req,res,next)=>{
     res.status(500).json({message:"Something went wrong", error: err.message});
 })
 
-app.listen(ENV.PORT,()=>{
-    connectDb();
-    console.log("running on ..." , ENV.PORT);
-})
+
+const startServer=async()=>{
+    try {
+        await connectDb();
+
+        //listen for local development only
+        if(ENV.NODE_ENV != "production"){
+            app.listen(ENV.PORT,()=>{
+                console.log(`Server is running on ${ENV.PORT}`);
+            });
+        }
+    } catch (error) {
+        console.log("Error in starting server:",error);
+        process.exit(1);
+    }
+}
+
+startServer();
+
+//export for vercel
+export default app;
