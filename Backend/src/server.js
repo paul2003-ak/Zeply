@@ -6,6 +6,7 @@ import { ENV } from "./config/env.js";
 import { connectDb } from "./config/db.js";
 import userrouter from "./routes/user.route.js";
 import Postrouter from "./routes/post.route.js";
+import commentsrouter from './routes/comment.route.js'
 
 
 const app = express();
@@ -16,6 +17,8 @@ app.use(clerkMiddleware());
 // Routes
 app.use("/api/users",userrouter)
 app.use("/api/post",Postrouter)
+app.use("/api/comments",commentsrouter)
+
 
 //error handling middleware
 app.use((err,req,res,next)=>{
