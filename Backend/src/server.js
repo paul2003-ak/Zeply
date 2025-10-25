@@ -1,8 +1,7 @@
 import express from "express";
 import cors from "cors";
 import {clerkMiddleware} from "@clerk/express";
-import { configDotenv } from "dotenv";
-configDotenv();
+
 import { ENV } from "./config/env.js";
 import { connectDb } from "./config/db.js";
 import userrouter from "./routes/user.route.js";
