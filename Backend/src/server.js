@@ -21,7 +21,6 @@ app.use(arcjetMiddleware);
 
 app.get("/", (req, res) => res.send("Hello from server"));
 
-
 // Routes
 app.use("/api/users",userrouter)
 app.use("/api/post",Postrouter)
@@ -39,6 +38,7 @@ app.use((err,req,res,next)=>{
 
 const startServer=async()=>{
     try {
+        // Connect to database
         await connectDb();
 
         //listen for local development only
@@ -49,11 +49,17 @@ const startServer=async()=>{
         }
     } catch (error) {
         console.log("Error in starting server:",error);
-        process.exit(1);
+        // Don't exit in production, let Vercel handle it
+        if(ENV.NODE_ENV !== "production") {
+            process.exit(1);
+        }
     }
 }
 
-startServer();
+// Only start server if not in production (Vercel handles this)
+if(ENV.NODE_ENV !== "production") {
+    startServer();
+}
 
 //export for vercel
 export default app;
