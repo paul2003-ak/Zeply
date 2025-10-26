@@ -1,31 +1,31 @@
-import arcjet, {tokenBucket, shield , detectBot} from "@arcjet/node";
 
-import {ENV} from './env.js';
+import arcjet, { tokenBucket, shield, detectBot } from "@arcjet/node";
+import { ENV } from "./env.js";
 
-//initialize arcjet with security rules
-
+// initialize Arcjet with security rules
 export const aj = arcjet({
-    key:ENV.ARCJET_API_KEY,
-    characteristics:["ip.src"],
-    rules:[
-        //shield protects your app from commen attacks e.g. SQL injection, XSS etc.
-        shield({mode:"LIVE"}),
+  key: ENV.ARCJET_API_KEY,
+  characteristics: ["ip.src"],
+  rules: [
+    // shield protects your app from common attacks e.g. SQL injection, XSS, CSRF attacks
+    shield({ mode: "LIVE" }),
 
-        //bot detection
-        detectBot({
-            mode:"LIVE",
-            allow:[
-                "CATEGORY:SEARCH_ENGINE",
+    // bot detection - block all bots except search engines
+    detectBot({
+      mode: "LIVE",
+      allow: [
+        "CATEGORY:SEARCH_ENGINE",
+        // allow legitimate search engine bots
+        // see full list at https://arcjet.com/bot-list
+      ],
+    }),
 
-            ]
-        }),
-
-        //rate limiting 
-        tokenBucket({
-            mode:"LIVE",
-            refillRate:10,//tokens added per interval
-            interval:10,//interval in seconds (10 sec)
-            capacity:15, // maximum tokens in bucket
-        })
-    ]
-})
+    // rate limiting with token bucket algorithm
+    tokenBucket({
+      mode: "LIVE",
+      refillRate: 10, // tokens added per interval
+      interval: 10, // interval in seconds (10 seconds)
+      capacity: 15, // maximum tokens in bucket
+    }),
+  ],
+});
