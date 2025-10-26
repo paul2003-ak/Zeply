@@ -19,6 +19,9 @@ app.use(express.json());
 app.use(clerkMiddleware());
 app.use(arcjetMiddleware);
 
+app.get("/", (req, res) => res.send("Hello from server"));
+
+
 // Routes
 app.use("/api/users",userrouter)
 app.use("/api/post",Postrouter)
